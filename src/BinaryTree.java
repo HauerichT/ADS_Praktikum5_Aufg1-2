@@ -5,7 +5,7 @@ public class BinaryTree extends Tree {
     public void addTree(String b) {
 
         // Checks if the current tree is empty
-        if (is_Empty(root)) {
+        if (this.root == null) {
             this.root = bin(null, b, null);
         } else {
             // Sets root as the starting point
@@ -26,6 +26,7 @@ public class BinaryTree extends Tree {
                     if (is_Empty(currentNode)) {
                         // Place the new node
                         parent.left = bin(null, b, null);
+                        System.out.println("Added: " + parent.left.value);
                         return;
                     }
                 } else {
@@ -34,6 +35,7 @@ public class BinaryTree extends Tree {
                     if (is_Empty(currentNode)) {
                         // Place the new node
                         parent.right = bin(null, b, null);
+                        System.out.println("Added: " + parent.right.value);
                         return;
                     }
                 }
@@ -42,13 +44,42 @@ public class BinaryTree extends Tree {
     }
 
     /* Method to remove a tree */
-    public Tree removeTree(String value) {
-        return null;
+    public Tree removeTree(Tree curTree, String value) {
+        if(curTree == null) return curTree;
+        
+        if (value.compareTo(value(curTree)) > 0) {  // Checks if value of tree to remove is bigger than current
+            curTree.right = removeTree(curTree.right, value);
+        } else if (value.compareTo(value(curTree)) < 0) {   // Checks if value of tree to remove is smaller than current
+            curTree.left = removeTree(curTree.left, value);
+        } else {    // If both values are equal
+            if (curTree.left == null && curTree.right == null) {    // Checks if tree has no children
+                curTree = null;
+            } else if (curTree.right != null) {
+                Tree curTreeTemp = curTree.right;
+                while(curTreeTemp.left != null){
+                    curTreeTemp = curTreeTemp.left;
+                }
+                curTree.value = value(curTreeTemp);
+                curTree.right = removeTree(curTree.right, curTree.value);
+            } else {
+                Tree curTreeTemp = curTree.left;
+                while(curTreeTemp.right != null){
+                    curTreeTemp = curTreeTemp.right;
+                }
+                curTree.value = value(curTreeTemp);
+                curTree.left = removeTree(curTree.left, curTree.value);
+            }
+        }
+
+        return curTree;
     }
 
+
     /* Method to modify a tree */
-    public Tree modifyTree(String value) {
-        return null;
+    public void modifyTree(Tree root, String valueNew, String valueOld) {
+        removeTree(root, valueOld);
+        addTree(valueNew);
+        System.out.println("Modified: " + valueOld + "->" + valueNew);
     }
 
     public void preorderTraverseTree(Tree currentTree) {

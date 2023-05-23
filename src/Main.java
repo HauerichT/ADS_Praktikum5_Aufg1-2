@@ -29,16 +29,38 @@ public class Main {
                     case 1 -> {
                         System.out.println("Bitte Value des neuen Knotens eingeben: ");
                         String inputValue = scanner.next();
-                        if (binaryTree.root == null) {  // checks if tree is empty
+                        if (binaryTree.root == null) {  // Checks if tree is empty
                             binaryTree.addTree(inputValue);
-                        } else if (binaryTree.findTree(inputValue) == null) {  // checks if tree is empty and key is not in current tree
+                        } else if (binaryTree.findTree(inputValue) == null) {  // Checks if tree is empty and key is not in current tree
                             binaryTree.addTree(inputValue);
                         } else {
                             System.out.println("Value bereits im Tree!");
                         }
                     }
-                    case 2 -> System.out.println("löschen");
-                    case 3 -> System.out.println("modifizieren");
+                    case 2 -> {
+                        System.out.println("Bitte Value des zu löschenden Knotens eingeben: ");
+                        String inputValueRemove = scanner.next();
+                        if (binaryTree.root == null) {
+                            System.out.println("Tree ist leer!");
+                        } else if (binaryTree.findTree(inputValueRemove) == null) {
+                            System.out.println("Tree mit diesem Value gibt es nicht!");
+                        } else {
+                            binaryTree.removeTree(binaryTree.root, inputValueRemove);
+                        }
+                    }
+                    case 3 -> {
+                        System.out.println("Bitte Value des zu modifizierenden Knotens eingeben: ");
+                        String inputModifyValue = scanner.next();
+                        if (binaryTree.root == null) {
+                            System.out.println("Tree ist leer!");
+                        } else if (binaryTree.findTree(inputModifyValue) == null) {
+                            System.out.println("Tree mit diesem Value gibt es nicht!");
+                        } else {
+                            System.out.println("Bitte neuen Value des Knotens eingeben: ");
+                            String inputModify = scanner.next();
+                            binaryTree.modifyTree(binaryTree.root, inputModify, inputModifyValue);
+                        }
+                    }
                     case 4 -> {
                         if (binaryTree.root == null) System.out.println("Tree ist leer!");
                         else binaryTree.preorderTraverseTree(binaryTree.root);
