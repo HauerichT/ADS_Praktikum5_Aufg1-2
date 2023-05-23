@@ -10,7 +10,7 @@ class Tree {
         this.right = y;
     }
 
-    public Tree() {};
+    public Tree() {}
 
     public Tree right(Tree tree) {
         return tree.right;
@@ -33,6 +33,14 @@ class Tree {
     }
 
     public String toString() {
-        return this.value + ": " + this.left + ", " + this.right;
+        if (this.left != null && this.right != null) {
+            return this.value + " (height=" + height + "): " + this.left.value + " (height=" + this.left.height + ")" + ", " + this.right.value + " (height=" + this.right.height + ")";
+        } else if (this.left == null && this.right != null) {
+            return this.value + " (height=" + height + "): null, " + this.right.value + " (height=" + this.right.height + ")";
+        } else if (this.left != null) {
+            return this.value + " (height=" + height + "): " + this.left.value + " (height=" + this.left.height + ")" + ", null";
+        } else {
+            return this.value + " (height=" + height + "): null, null";
+        }
     }
 }
